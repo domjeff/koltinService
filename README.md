@@ -13,5 +13,5 @@ non UI interfering process inside the service.
 This service is supposed to be a service that gives notification to the phone. The service has a countdown timer and will print the remaining time per some seconds.
 I have been trying to update the UI by this remaining time on timer but to this point I haven't succeeded yet.
 I tried to 2 methods to do it:
-  1. BroadcastReceiver (Not working, somehow the entity doesn't receive the sent messsages.)
-  2. ServiceConnection (It is able to connect the data to UI but not able to trigger update on UI, so the UI needs to request for updating the text based on the remaining time)
+    1. BroadcastReceiver (Not working, somehow the entity doesn't receive the sent messsages.)
+    2. ServiceConnection (It is able to connect the data to UI but not able to trigger update on UI, so the UI needs to request for updating the text based on the remaining time)
