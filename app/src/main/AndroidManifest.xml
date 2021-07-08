@@ -23,10 +23,12 @@
 
         <receiver
             android:name=".BroadcastReceiver.ForegroundServiceBroadcastReceiver"
+            android:enabled="true"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED" />
-                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />
+                <action android:name="com.example.serviceandnotification.UI"/>
+<!--                <action android:name="android.intent.action.BOOT_COMPLETED" />-->
+<!--                <action android:name="android.intent.action.INPUT_METHOD_CHANGED" />-->
             </intent-filter>
         </receiver>
 

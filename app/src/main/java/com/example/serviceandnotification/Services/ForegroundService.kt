@@ -95,9 +95,16 @@ class ForegroundService : LifecycleService() {
 
         override fun onTick(p0: Long) {
             timerCountdown = p0 / 1000
-            intent?.action = "com.example.serviceandnotification.UI";
-            intent?.putExtra("CURRENT CLOCK", p0 / 1000)
-            sendBroadcast(intent)
+
+            val sendBroadcastIntent = Intent();
+            sendBroadcastIntent.action = "com.example.serviceandnotification.UI"
+            sendBroadcastIntent.flags = Intent.FLAG_INCLUDE_STOPPED_PACKAGES
+            sendBroadcastIntent.putExtra("CURRENT CLOCK", (p0 / 1000).toString())
+            sendBroadcast(sendBroadcastIntent)
+
+//            intent?.action = "com.example.serviceandnotification.UI";
+//            intent?.putExtra("CURRENT CLOCK", p0 / 1000)
+//            sendBroadcast(intent)
 
             Log.d(
                 "Tag from service",

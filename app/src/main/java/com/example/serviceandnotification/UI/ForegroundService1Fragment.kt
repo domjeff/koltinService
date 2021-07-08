@@ -35,10 +35,12 @@ class ForegroundService1Fragment : Fragment(R.layout.foreground_service_fragment
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        broadcastReceiver = ForegroundServiceBroadcastReceiver(this)
+        broadcastReceiver = ForegroundServiceBroadcastReceiver(setServiceStatus)
+
         val intentFilter = IntentFilter()
-        intentFilter?.addAction("com.example.serviceandnotification.UI");
+        intentFilter.addAction("com.example.serviceandnotification.UI");
         requireContext().registerReceiver(broadcastReceiver, intentFilter)
+
         btnStartService.setOnClickListener {
             sendCommandToService(ACTION_START_OR_RESUME_FOREGROUND_SERVICE)
 
@@ -64,6 +66,8 @@ class ForegroundService1Fragment : Fragment(R.layout.foreground_service_fragment
         }
     }
 
+    var setServiceStatus =
+        { newText: String -> etServiceStatus.setText(newText) }
 //    private fun bindServiceToUI(intent: Intent) {
 //        requireContext().bindService(intent, connection, Context.BIND_AUTO_CREATE)
 //    }
