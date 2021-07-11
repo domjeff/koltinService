@@ -79,6 +79,32 @@ class ForegroundService : LifecycleService() {
         startForeground(NOTIFICATION_ID, notificationBuilder.build())
     }
 
+    private fun updateNotification(secondsRemaining: Long) {
+        val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE)
+                as NotificationManager
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            createNotificationChannel(notificationManager)
+        }
+
+        val notificationBuilder =
+            NotificationCompat.Builder(this, FOREGROUND_SERVICE_CHANNEL_ID)
+                .setAutoCancel(false)
+                .setOngoing(true)
+                .setSmallIcon(R.drawable.ic_baseline_run_circle_24)
+                .setContentTitle("Foreground Service Notification")
+                .setContentText(
+                    "This is description for foreground service notification: " +
+                            "$secondsRemaining second(s) remaining"
+                )
+                .setContentIntent(getMainActivityPendingIntent())
+
+        notificationManager.notify(
+            NOTIFICATION_ID,
+            notificationBuilder.build(),
+        )
+    }
+
     private fun getMainActivityPendingIntent() = PendingIntent.getActivity(
         this,
         0,
@@ -95,12 +121,14 @@ class ForegroundService : LifecycleService() {
 
         override fun onTick(p0: Long) {
             timerCountdown = p0 / 1000
+            updateNotification(timerCountdown)
 
             val sendBroadcastIntent = Intent();
             sendBroadcastIntent.action = "com.example.serviceandnotification.UI"
             sendBroadcastIntent.flags = Intent.FLAG_INCLUDE_STOPPED_PACKAGES
             sendBroadcastIntent.putExtra("CURRENT CLOCK", (p0 / 1000).toString())
             sendBroadcast(sendBroadcastIntent)
+
 
 //            intent?.action = "com.example.serviceandnotification.UI";
 //            intent?.putExtra("CURRENT CLOCK", p0 / 1000)
